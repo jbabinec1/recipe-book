@@ -1,0 +1,22 @@
+.recipe-container {
+    display: flex;
+}
+.recipe {
+outline: 1px solid black;
+width: 200px;
+margin-right: 20px;
+margin-bottom: 26px;
+padding-bottom: 50px;
+}
+
+.recipe-wrapper {
+    /*max-width: 315px;*/
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.inner-container {
+    display: flex;
+    flex-wrap: wrap;
+}
