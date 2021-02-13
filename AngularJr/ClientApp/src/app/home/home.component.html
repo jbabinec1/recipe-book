@@ -1,11 +1,14 @@
 <div class="outer-home-container"> 
-<h1>Hello, nooob!</h1>
+<h1>Hello, {{user.firstName}}</h1>
+<p> User id: {{user.Id}}</p>
+
 <p>Welcome to your new single-page application</p>
 
 <router-outlet></router-outlet>
-
-<app-recipe-container></app-recipe-container> 
+<app-recipe-container [user]="user"></app-recipe-container> 
 
 </div>
+
+<!--(sendData)="dataFinished($event)"-->
 
 

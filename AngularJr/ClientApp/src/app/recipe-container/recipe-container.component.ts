@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
@@ -8,16 +8,22 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class RecipeContainerComponent {
 
-  public user: User[] = [];
+ // public user: User[] = [];
+  public response: { dbPath: '' }
+ @Input() public user: User[] = [];
+ @Output() public sendData = new EventEmitter(); //Send data to home
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
 
 
-    this.http.get<User[]>('https://localhost:28520/api/contacts/GetAll').subscribe(result => {
-   this.user = result;
-     }, error => console.error(error)); 
+
+  }
+
+  public uploadFinished = (event) => {
+
+    this.response = event;
 
   }
 

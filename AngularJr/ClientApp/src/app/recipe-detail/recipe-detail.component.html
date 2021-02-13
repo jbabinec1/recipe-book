@@ -1,0 +1,11 @@
+
+<p>TEST {{user.firstName}}   </p>
+
+<div *ngFor="let user of user.recipes"> 
+
+  <div *ngIf="user.id == id">
+    <p>  {{user.id}}  </p>
+    <p>  {{user.nameOfDish}}  </p>
+  </div>
+
+</div>

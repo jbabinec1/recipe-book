@@ -1,7 +1,13 @@
-<div class="recipe">  <p style="color:red"> {{user.nameOfDish}}   </p>
+<div class="recipe" routerLink="/RecipeDetail" routerLinkActive="active" (click)="detailsRecipe(user.id)">  <p style="color:red"> {{user.nameOfDish}}   </p>
 
-<div> {{user.ingredients}}</div>
 
-<div> {{user.instructions}} </div>
+<div> <img [src]="createImgPath(user.image)" alt="picture" style="width:100px; height:100px; size:cover">   </div> 
+
+
+<div> recipe id: {{user.id}}    </div>
 
 </div>
+
+
+
+<!--routerLinkActive="active" (click)="detailsRecipe(user.id)"-->

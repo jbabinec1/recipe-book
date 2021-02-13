@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']"> RecipeBook </a>
+      <a class="navbar-brand" [routerLink]="['/home']"> RecipeBook </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -25,18 +25,29 @@
             [routerLinkActive]="['link-active']"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+            <a class="nav-link text-dark" [routerLink]="['/home']">Home</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']"
-              >Counter</a
+            <a class="nav-link text-dark" [routerLink]="['/CreateRecipe']"
+              >Create New</a
             >
           </li>
+
+          <div *ngIf="this.authService.isLoggedIn() === true;" style="display: flex;"> 
+            <li class="nav-item" [routerLinkActive]="['link-active']"> 
+              <a (click)="logout()" class="nav-link text-dark" style="text-decoration: none;">Logout</a>
+            </li>
+          </div>
+
+          <div *ngIf="this.authService.isLoggedIn() === false;"> 
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']"
-              >Fetch data</a
+            <a class="nav-link text-dark" [routerLink]="['/Login']"
+              >Login</a
             >
           </li>
+        </div>
+        
+          
         </ul>
       </div>
     </div>

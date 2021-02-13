@@ -1,0 +1,55 @@
+<div class="outer-recipe-container">
+    
+
+<div class="outer-create-container">
+    <br>
+    
+   <!--- <mat-card> -->
+     <div class="inner-create-container"> 
+      <section class="mat-typography">
+     <div style="display: flex; justify-content: center;"> <h2 style="color: #ffffff">Add a recipe</h2> </div>
+      </section>
+      <mat-divider></mat-divider>
+      <br>
+
+
+      <form [formGroup]="createForm" class="create-form">     
+        <div class="field-container"> 
+          <label class="label-name"> Recipe name </label>
+        <input placeholder="name of recipe" formControlName="NameOfDish" #NameOfDish >
+        </div> 
+
+      
+          <div class="field-container"> 
+            <label class="label-name"> Ingredients </label>
+          <input style="padding: 6px 12px" placeholder="Ingredients" formControlName="Ingredients" #Ingredients>
+          </div>          
+
+
+         <div> 
+           <label class="label-name"> Instructions </label>
+         <textarea required class="description-field-container" placeholder="Description" formControlName="Instructions" #Instructions></textarea> </div>
+
+       
+
+        <br><br>
+
+        
+        <button style="background-color:#f2a900; color:000" type="submit" (click)="addRecipe(NameOfDish.value, Ingredients.value, Instructions.value)" mat-raised-button color="primary">Send</button> 
+
+
+      </form>
+
+      <!--[disabled]="createForm.pristine || createForm.invalid-->
+
+
+    </div> <!--End of inner container -->
+
+<!--</mat-card> -->
+
+
+
+  </div>
+    <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
+
+</div>

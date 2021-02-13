@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {RecipeServiceService} from '../recipe-service.service';
 
 @Component({
   selector: 'app-home',
@@ -9,68 +10,59 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class HomeComponent {
 
   contacts: Contact[] = [];
-  user: User[] = [];
- 
+  @Input() public user: User[] = [];
 
-  headers = { 'content-type': 'application/json' }
-  constructor(private http: HttpClient) { }
+ // @Input() public user: User = [];
+  
+  public ID: [];
 
-  /* this.http.get<Contact[]>(/).subscribe(result => {
-      this.contacts = result;
-    }, error => console.error(error)); */
+  
+  constructor(private http: HttpClient, private recipeService: RecipeServiceService) { }
 
-
-  /*   this.http.get<Contact[]>('').subscribe(result => {
-  this.contacts = result;
-    }, error => console.error(error)); */
-
-
-  /*  this.http.post<Contact[]>('', { observe: 'body', responseType: 'json', headers: getHeaders }).subscribe(result => {
-      this.contacts = result;
-    }, error => console.error(error));
-  */
-
+  
 
 
   ngOnInit() {
 
-    // let getHeaders = new HttpHeaders({'Accept': 'application/vnd.api+json'}); 
 
-    //const headers: HttpHeaders = new  HttpHeaders();
-    //headers.set('Content-Type', 'application/x-www-form-urlencoded');
-    /* const contact = {
-     
-   "FirstName":"MERP merp", 
-   "LastName":"MERPP",
-   "EmailAddress":"HI",
-   "ID":"SDSDSD"  
- 
-     }; */   /*  this.http.post<Contact[]>('', { observe: 'body', responseType: 'json', headers: getHeaders }).subscribe(result => {
-      this.contacts = result;
-    }, error => console.error(error));
-  */
-
- //let EmailAddresses = {EmailAddress: 'Meh@meh.com'}; 
-/*
-    this.http.post<User[]>('https://localhost:28520/api/contacts/', {FirstName: 'Jared', LastName:'BabinecBabinec',  Recipes: [  {NameOfDish:'Lentil chili', Ingredients:'Need to figure out', Instructions: 'Ask Jinny'}, {NameOfDish:'Sum dish', Ingredients:'Need to figure out', Instructions: 'Ask urself'}  ]}, { headers: headers }).subscribe(result => {
-   this.user = result;
- }, error => console.error(error)); */
+    /*
+    this.http.get<User[]>('https://localhost:28520/api/contacts/GetAll').subscribe(result => {
+      this.user = result;
+        }, error => console.error(error));  */
 
 
-
-/*
-    this.http.get<User[]>('https://localhost:28520/api/contacts/').subscribe(result => {
-   this.user = result;
-     }, error => console.error(error)); */
-
+        this.recipeService.getUser().subscribe((user: User[]) => {
+          this.user = user; 
+          console.log(user);
+        }) 
 
 
+  /*    
+  this.getUser().subscribe((user: User[]) => {
+    this.user = user; 
+    console.log(user);
+  }) */
+      
 
 
-
-
-
+    
   }
+
+
+
+
+  getUser() {
+
+    let getHeaders = new HttpHeaders({'authorization': 'Bearer ' + localStorage.getItem('access_token')
+    }); 
+
+  return this.http.get('https://localhost:28520/api/contacts/GetOne',  { headers: getHeaders });   
+}
+
+
+
+
+ 
 
 
 
@@ -101,6 +93,7 @@ interface User {
   NameOfDish: string;
   //Ingredients: string;
   //Instructions: string;
+  image: string;
 
 }
 
