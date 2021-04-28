@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {RecipeServiceService} from '../recipe-service.service'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,59 +21,76 @@ export class CreateRecipeComponent {
   createForm: FormGroup;
   recipes: Recipes[];
   public response: { dbPath: '' }
-  Image: any;
+  public response2: { dbPath2: 'http://localhost:5000/assets/guessIllDie.jpeg' }
+  Image = './assets/guessIllDie.jpeg';
+  defaultImg = 'http://localhost:5000/assets/guessIllDie.jpeg';
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private RecipeService: RecipeServiceService) { 
+  public test = './assets/guessIllDie.jpeg';
+
+  public guess = './Resources/Images/ipsum.png'
+
+  constructor(private fb: FormBuilder, private router: Router, private http: HttpClient, private RecipeService: RecipeServiceService) { 
 
     this.createForm = this.fb.group({
       NameOfDish: '',
       Ingredients: '',
-      Instructions: '',
+      Instructions: ''
+      
       
     });
 
   }
 
 
-/*
-    addRecipe(NameOfDish, Ingredients, Instructions) {
-    this.RecipeService.addRecipe(NameOfDish, Ingredients, Instructions).subscribe(
-      (recipe: Recipes[]) => {
-        this.recipes = recipe;
-        console.log(recipe);
-      }
-    )
 
-    } */
+    addRecipe(NameOfDish, Ingredients, Instructions, Image?) {
 
+    
+      let getHeaders = new HttpHeaders({'authorization': 'Bearer ' + localStorage.getItem('access_token')
+    }); 
 
-
-
-    addRecipe(NameOfDish, Ingredients, Instructions) {
-
-
-      let getHeaders = new HttpHeaders({'Accept': 'application/vnd.api+json', 'Cache-Control': 'no-cache', 'authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyMzBlOGM1Yy03ZDc4LTQ1YjgtOWJjYy0yNzJkZWE3NjRkMjkiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjYwMThkMTVjOTkzNTdiYjBlNjMyNGU5MCIsImV4cCI6MTYxNDgzMTE5NywiaXNzIjoiSmFyZWQiLCJhdWQiOiJKYXJlZCJ9.tt6wgA0FE_dfhU_3ejV6Uosdg2xQFMaNS_wVgW5KqmA',
-      "accept": 'application/vnd.api+json'}); 
-
-
-      const recipe = {
+  
+    let recipe = {
       NameOfDish: NameOfDish,
       Ingredients: Ingredients,
       Instructions: Instructions,
-      Image: this.response.dbPath
-      
+      Image: this.guess
+    
       };
 
-    return this.http.post('https://localhost:28520/api/contacts/PostRecipe', recipe, {observe:'body', responseType: 'json', headers: getHeaders }).subscribe(
+    //By default don't expect response for image ..
+     
+    
+    
+      if(this.response) {
+
+          recipe = {
+          NameOfDish: NameOfDish,
+          Ingredients: Ingredients,
+          Instructions: Instructions,
+          Image: this.response.dbPath
+            
+  
+      }
+    }
+
+
+    
+  return this.http.post('https://localhost:28520/api/contacts/PostRecipe', recipe, {observe:'body', responseType: 'json', headers: getHeaders }).subscribe(
       (recipe: Recipes[]) => {
         this.recipes = recipe;
+        this.router.navigateByUrl('/home', {replaceUrl: true})
         console.log(recipe);
       }
     ) 
-  
+
+
       }   
 
+    
 
+
+  
 
 
 
@@ -107,7 +125,7 @@ interface Recipes {
   NameOfDish: string;
   Ingredients: string;
   Instructions: string;
-  Image: string;
+  Image?: any;
   
 
 }

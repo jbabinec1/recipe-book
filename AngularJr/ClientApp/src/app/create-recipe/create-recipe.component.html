@@ -16,26 +16,26 @@
       <form [formGroup]="createForm" class="create-form">     
         <div class="field-container"> 
           <label class="label-name"> Recipe name </label>
-        <input placeholder="name of recipe" formControlName="NameOfDish" #NameOfDish >
+        <input placeholder="name of recipe" formControlName="NameOfDish" #NameOfDish required pattern=".*\S+.*">
         </div> 
 
       
           <div class="field-container"> 
             <label class="label-name"> Ingredients </label>
-          <input style="padding: 6px 12px" placeholder="Ingredients" formControlName="Ingredients" #Ingredients>
+          <input style="padding: 6px 12px" placeholder="Ingredients" formControlName="Ingredients" #Ingredients required pattern=".*\S+.*">
           </div>          
 
 
          <div> 
            <label class="label-name"> Instructions </label>
-         <textarea required class="description-field-container" placeholder="Description" formControlName="Instructions" #Instructions></textarea> </div>
+         <textarea required class="description-field-container" placeholder="Description" formControlName="Instructions" #Instructions required pattern=".*\S+.*"></textarea> </div>
 
        
 
         <br><br>
 
         
-        <button style="background-color:#f2a900; color:000" type="submit" (click)="addRecipe(NameOfDish.value, Ingredients.value, Instructions.value)" mat-raised-button color="primary">Send</button> 
+        <button [disabled]="createForm.pristine || createForm.invalid" style="background-color:#f2a900; color:000" type="submit" (click)="addRecipe(NameOfDish.value, Ingredients.value, Instructions.value)" mat-raised-button color="primary">Send</button> 
 
 
       </form>

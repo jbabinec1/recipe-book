@@ -6,4 +6,10 @@
     padding-bottom: 50px;
     
     }
+
+    .recipe-title {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     

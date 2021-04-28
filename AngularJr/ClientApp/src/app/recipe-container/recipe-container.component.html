@@ -4,7 +4,12 @@
 <div class="outer-container">    
 <div class="inner-container">  
 
-    <app-recipe-item *ngFor="let user of user.recipes" [user]="user"> </app-recipe-item>
+    <p  *ngIf="user.recipes == 0"> Create a new recipe! </p>
+    <app-recipe-item *ngFor="let user of user.recipes" [user]="user"> 
+
+       
+
+    </app-recipe-item>
 
 
 </div>

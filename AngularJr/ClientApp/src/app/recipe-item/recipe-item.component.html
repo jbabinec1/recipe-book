@@ -1,10 +1,11 @@
-<div class="recipe" routerLink="/RecipeDetail" routerLinkActive="active" (click)="detailsRecipe(user.id)">  <p style="color:red"> {{user.nameOfDish}}   </p>
+<div class="recipe" routerLink="/RecipeDetail" routerLinkActive="active" (click)="detailsRecipe(user.id)">  <p class="recipe-title" style="color:red"> {{user.nameOfDish}}   </p>
 
 
 <div> <img [src]="createImgPath(user.image)" alt="picture" style="width:100px; height:100px; size:cover">   </div> 
 
 
 <div> recipe id: {{user.id}}    </div>
+
 
 </div>
 

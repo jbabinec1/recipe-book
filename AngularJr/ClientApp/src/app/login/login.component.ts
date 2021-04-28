@@ -39,8 +39,7 @@ export class LoginComponent implements OnInit {
   , 2100);
 
   this.buttonClicked = true;
-  
-   
+    
  }  
 
  
