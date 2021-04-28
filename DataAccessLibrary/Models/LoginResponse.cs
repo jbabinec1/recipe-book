@@ -55,8 +55,9 @@ namespace DataAccessLibrary.Models
 
 
 
-    public class UserDataResponse
-    {
+
+    public class UserDataResponse 
+      {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -64,11 +65,22 @@ namespace DataAccessLibrary.Models
         public string Email { get; set; }
 
         public List<RecipeModel> Recipes { get; set; } = new List<RecipeModel>();
+      
 
+
+        }
+
+
+
+
+    public class RecipeResponse
+    {
+        public string NameOfDish { get; set; }
+
+        public string Ingredients { get; set; }
+
+        public string Instructions { get; set; }
     }
-
-
-
 
 
 

@@ -25,6 +25,9 @@ namespace DataAccessLibrary
 
 
 
+
+        //Add new recipe into Recipes array
+
         public async Task<UserModel> FindArrayAndUpdate(string table, ObjectId Id, RecipeModel modell) {
 
             table = "Users";
@@ -36,26 +39,24 @@ namespace DataAccessLibrary
             {
                 NameOfDish = modell.NameOfDish,
                 Ingredients = modell.Ingredients,
-                Instructions = modell.Instructions
+                Instructions = modell.Instructions,
+                Image = modell.Image
             });
 
-
-         
                 return await collection.FindOneAndUpdateAsync(filter, update);
                 
-
         }
 
 
 
 
 
-        public void InsertRecord<T>(string table, T record)
-        {
+         public void InsertRecord<T>(string table, T record)
+         {
             var collection = db.GetCollection<T>(table);
             collection.InsertOne(record);
 
-        }
+         }
 
 
         /*  public T FindTable<T>(string table)
@@ -67,10 +68,10 @@ namespace DataAccessLibrary
           } */
 
         public List<T> LoadCollection<T>(string table = "Users")
-        {
+         {
             var collection = db.GetCollection<T>(table);
             return collection.Find(new BsonDocument()).ToList();
-        }
+         }
 
 
 
@@ -82,40 +83,31 @@ namespace DataAccessLibrary
         }
 
 
-        public T LoadRecordById<T>(string table, Guid id)
+
+
+        public T LoadRecordById<T>(string table, Object id)
         {
 
             var collection = db.GetCollection<T>(table);
             var filter = Builders<T>.Filter.Eq("Id", id);
 
-            return collection.Find(filter).First();
-
+            return collection.Find(filter).FirstOrDefault();
 
         }
 
 
-/* RIP      public void FindAndUpdate<T> (string table, RecipeModel modell, UserModel model, MongoDB.Bson.ObjectId Id)
+
+
+
+        public T LoadRecipeRecordById<T>(string table, string id)
         {
-            table = "Users";
-            var collection = db.GetCollection<UserModel>(table);
 
-            var filter = Builders<UserModel>.Filter.Eq("Id", Id);
-            //var filter = Builders<UserModel>.Filter.Eq("_id", model.Id);
+            var collection = db.GetCollection<T>(table);
+            var filter = Builders<T>.Filter.Eq("id", id);
 
-      
-             var update = Builders<UserModel>.Update.Push(e => e.Recipes, new RecipeModel
-            {
-                NameOfDish = modell.NameOfDish,
-                Ingredients = modell.Ingredients,
-                Instructions = modell.Instructions 
-            });
+            return collection.Find(filter).FirstOrDefault();
 
-
-            collection.FindOneAndUpdate(filter, update);
-         // return  await collection.FindOneAndUpdateAsync(filter, update);
-           
-
-        }  */
+        } 
 
 
 
@@ -139,7 +131,7 @@ namespace DataAccessLibrary
         }
 
 
-        public void DeleteRecord<T>(string table, Guid id)
+        public void DeleteRecord<T>(string table, ObjectId id)
         {
             var collection = db.GetCollection<T>(table);
             var filter = Builders<T>.Filter.Eq("Id", id);

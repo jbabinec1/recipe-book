@@ -14,7 +14,6 @@ namespace DataAccessLibrary.Models
     public class UserModel : MongoUser
     {
 
-       //public Guid Id { get; set; } = Guid.NewGuid();
 
         public string FirstName { get; set; }
 

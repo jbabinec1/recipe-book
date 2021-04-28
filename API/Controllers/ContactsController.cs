@@ -13,10 +13,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication;
 using System.Net;
 using MongoDB.Driver;
+using System.IO;
+using System.Net.Http.Headers;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/[action]")]  //[action]
+    [Route("api/[controller]/[action]/")]  //[action]
     public class ContactsController : Controller
     {
 
@@ -47,12 +49,17 @@ namespace API.Controllers
             [HttpGet]
             public async Task<ActionResult> UserData()
             {
-                var user = await _userManager.GetUserAsync(User);
-                var userData = new UserDataResponse
-                {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    Recipes = user.Recipes
+
+            var user = await _userManager.GetUserAsync(User);
+
+            //var merp = await _userManager.
+
+               
+            var userData = new UserDataResponse
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Recipes = user.Recipes
 
                 };
                 return Ok(userData);
@@ -70,7 +77,7 @@ namespace API.Controllers
 
            var user = await _userManager.GetUserAsync(User);
 
-            var recipe = new RecipeModel { NameOfDish = modell.NameOfDish, Ingredients = modell.Ingredients, Instructions = modell.Instructions };
+            var recipe = new RecipeModel { NameOfDish = modell.NameOfDish, Ingredients = modell.Ingredients, Instructions = modell.Instructions, Image = modell.Image };
 
 
            return await db.FindArrayAndUpdate(tableName, user.Id, recipe);
@@ -85,40 +92,55 @@ namespace API.Controllers
 
 
 
+        //Upload image
 
-
-
-
-        /*    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-            [HttpPost]
-            public async Task<IActionResult> PostRecipe([FromBody]UserModel model, RecipeModel modell)
+        [HttpPost, DisableRequestSizeLimit]
+        public IActionResult Upload()
+        {
+            try
             {
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine("Resources", "Images");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                var defaultImg = "./Resources/Images/kitten-small.png";
 
-
-                var user = await _userManager.GetUserAsync(User);
-
-                db.FindAndUpdate<UserModel>(tableName, modell, model, model.Id);
-
-
-
-
-
-
-
-                var userData = new UserDataResponse
+                if(file.Length > 0)
                 {
-
-                    Recipes = user.Recipes
-
-                };
-
-                return Ok(userData);
-
-                //var ret = await user.Recipes.FindOneAndUpdateAsync(filter, update);
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
+                    var dbPath2 = Path.Combine(folderName, defaultImg);
 
 
-            }  */
 
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                    return Ok(new { dbPath });
+                } else
+                {
+                    //var dbPath2 = Path.Combine(folderName, defaultImg);
+                    //return BadRequest();
+                    //return Ok( new { dbPath2 } );
+                    return Ok();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+
+            }
+        }
+
+
+
+
+
+
+      
 
 
 
@@ -202,13 +224,91 @@ namespace API.Controllers
 
 
 
-                  [HttpGet] 
+                 [HttpGet] 
              public List<UserModel> GetAll()
              {
                  return db.LoadRecords<UserModel>(tableName);
 
 
-             } 
+             }
+
+
+
+        //Need to rename
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<UserModel> GetOne()
+
+        {
+
+            
+            var user = await _userManager.GetUserAsync(User);
+
+            var userId = user.Id;
+
+            
+
+            return db.LoadRecordById<UserModel>(tableName, userId);
+
+        }
+
+
+
+
+
+
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+         /*    [HttpGet("api/contacts/GetRecipe/{idd}")]
+             public async Task<RecipeModel> GetRecipe([FromRoute] string id, RecipeModel model)
+
+             {
+
+                 var user = await _userManager.GetUserAsync(User);
+
+                 Guid guid = new Guid(id);
+
+             //var doesMatch = user.Recipes.FirstOrDefault();
+            
+
+                
+
+
+                return db.LoadRecipeRecordById<RecipeModel>(tableName, guid);
+             } */
+       
+
+
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+            [HttpGet("GetRecipe/{id}")]
+            public async Task<ActionResult> GetRecipe([FromRoute] string id, RecipeModel model)
+            {
+
+                var user = await _userManager.GetUserAsync(User);
+
+                Guid guid = new Guid(id);
+
+            //var test = "16a5e706-beb1-4731-ae53-4c8f52bb4d70";
+
+                var recipeData = db.LoadRecipeRecordById<RecipeModel>(tableName, id);
+
+              
+
+
+            return Ok(recipeData);
+            }
+              
+
+
+
+
+
+
+
+
+
 
 
 

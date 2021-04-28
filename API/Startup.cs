@@ -22,6 +22,10 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using System.Text;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace API
 {
@@ -96,7 +100,26 @@ namespace API
             services.AddControllersWithViews();
             services.AddCors(options => options.AddDefaultPolicy(
                 builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
+
+
+
+            services.Configure<FormOptions>(o =>
+            {
+
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+
+            });
+
+
+
+
         }
+
+
+        
 
 
 
@@ -120,7 +143,12 @@ namespace API
             app.UseRouting();
 
             app.UseCors();
-
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
