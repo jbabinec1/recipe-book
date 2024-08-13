@@ -17,6 +17,7 @@
     },
     "API": {
       "commandName": "Project",
+      "launchBrowser": true,
       "launchUrl": "api/contacts/",
       "applicationUrl": "https://localhost:28520",
       "environmentVariables": {

@@ -32,6 +32,7 @@ namespace AngularJr
             });
         }
 
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -46,6 +47,7 @@ namespace AngularJr
                 app.UseHsts();
             }
 
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -54,8 +56,6 @@ namespace AngularJr
             }
 
             app.UseRouting();
-
-            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

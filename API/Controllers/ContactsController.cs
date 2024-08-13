@@ -52,9 +52,6 @@ namespace API.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
-            //var merp = await _userManager.
-
-               
             var userData = new UserDataResponse
             {
                 FirstName = user.FirstName,
@@ -241,14 +238,12 @@ namespace API.Controllers
         public async Task<UserModel> GetOne()
 
         {
-
-            
+    
             var user = await _userManager.GetUserAsync(User);
 
             var userId = user.Id;
 
             
-
             return db.LoadRecordById<UserModel>(tableName, userId);
 
         }

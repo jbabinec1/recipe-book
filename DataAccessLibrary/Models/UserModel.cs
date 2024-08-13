@@ -13,8 +13,6 @@ namespace DataAccessLibrary.Models
 {
     public class UserModel : MongoUser
     {
-
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
@@ -22,7 +20,6 @@ namespace DataAccessLibrary.Models
         //public string Email { get; set; }
 
         public List<RecipeModel> Recipes { get; set; } = new List<RecipeModel>();
-
-
     }
+
 }

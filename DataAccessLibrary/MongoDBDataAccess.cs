@@ -21,10 +21,6 @@ namespace DataAccessLibrary
             db = client.GetDatabase(dbName);
         }
 
-        // let collection = db.GetCollection<T>("Contacts");
-
-
-
 
         //Add new recipe into Recipes array
 
@@ -48,9 +44,6 @@ namespace DataAccessLibrary
         }
 
 
-
-
-
          public void InsertRecord<T>(string table, T record)
          {
             var collection = db.GetCollection<T>(table);
@@ -58,14 +51,6 @@ namespace DataAccessLibrary
 
          }
 
-
-        /*  public T FindTable<T>(string table)
-          {
-             var collection = db.GetCollection<T>(table);
-              collection = db.GetCollection("Users");
-              // return collection.
-
-          } */
 
         public List<T> LoadCollection<T>(string table = "Users")
          {

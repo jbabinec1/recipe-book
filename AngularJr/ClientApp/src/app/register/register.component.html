@@ -4,15 +4,15 @@
    <!--- <mat-card> -->
      <div class="inner-create-container"> 
       <section class="mat-typography">
-     <div style="display: flex; justify-content: center;"> <h2 style="color: #ffffff">Create an account</h2> </div>
+     <div style="display: flex; justify-content: center;"> <h2 style="color: #000000">Create an account</h2> </div>
       </section>
-      <mat-divider></mat-divider>
+      
       <br>
 
       <div class="outer-form-wrapper"> 
         <div class="form-wrapper"> 
       <form [formGroup]="registerUser" class="create-form">
-
+      
         <div class="field-container"> 
           <label class="label-name">Email</label>
         <input class="input" placeholder="Email" formControlName="email" #email>
@@ -20,29 +20,31 @@
 
         <div class="field-container"> 
             <label class="label-name"> First Name </label>
-          <input class="input" style="padding: 6px 12px" placeholder="First name" formControlName="FirstName" #FirstName>
+          <input class="input"  placeholder="First name" formControlName="FirstName" #FirstName>
           </div>   
 
           <div class="field-container"> 
             <label class="label-name"> Last Name </label>
-          <input class="input" style="padding: 6px 12px" placeholder="Last Name" formControlName="LastName" #LastName>
+          <input class="input" placeholder="Last Name" formControlName="LastName" #LastName>
           </div>   
 
 
           <div class="field-container"> 
             <label class="label-name"> Password </label>
-          <input class="input" style="padding: 6px 12px" placeholder="password" formControlName="password" #password>
+          <input class="input" placeholder="password" placeholder="password" required 
+          formControlName="password" #password>
           </div>    
           
           <div class="field-container"> 
             <label class="label-name"> Confirm Password </label>
-          <input class="input" style="padding: 6px 12px" placeholder="Confirm Password" formControlName="ConfirmPassword" #ConfirmPassword>
+          <input class="input" placeholder="Confirm Password" formControlName="ConfirmPassword" #ConfirmPassword required>
           </div>    
 
-
+        
         <br><br>
         
-        <button style="background-color:#f2a900; color:000"type="submit" routerLink="/login" (click)="addUser()" [disabled]="registerUser.pristine || registerUser.invalid" mat-raised-button color="primary">Submit</button>
+        <button class="button" type="submit" routerLink="/login" (click)="addUser()" [disabled]="registerUser.pristine || registerUser.invalid" mat-raised-button color="primary">Submit</button>
+        
       </form> 
 
       <!--(click)="addUser(name.value, password.value, platform.value)"-->

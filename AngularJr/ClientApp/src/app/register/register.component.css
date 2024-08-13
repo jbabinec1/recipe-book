@@ -1,0 +1,22 @@
+.field-container {
+   /* display: flex; */
+    flex-direction: column;
+    padding-top: 15px;
+}
+
+.input {
+    width: 100%;
+}
+
+.outer-form-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+/* "background-color:#ed9121; color:000; width: 100%"  */
+.button {
+
+    background-color: #ed9121;
+    color: 000;
+    width: 100%;
+}

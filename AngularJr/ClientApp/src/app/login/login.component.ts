@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   //success = false;
   @Input() public user: User[] = [];
 
-  constructor(private formbuilder: FormBuilder, private authService: AuthenticationService, private router: Router) { 
+  constructor(private formbuilder: FormBuilder, private authService: AuthenticationService, public router: Router) { 
 
     this.loginUser = this.formbuilder.group({
       email: ['', Validators.required],
